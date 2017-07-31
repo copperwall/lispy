@@ -9,7 +9,6 @@ Lispy::ExprC::~ExprC() {
 }
 
 Lispy::NumC::~NumC() {}
-
 Lispy::NumC::NumC(int num): n(num) {}
 
 Lispy::Value* Lispy::NumC::interp() {
@@ -17,8 +16,10 @@ Lispy::Value* Lispy::NumC::interp() {
    return this->v;
 }
 
-int Lispy::NumC::val() {
-   return this->n;
+Lispy::BoolC::BoolC(bool boolean): b(boolean) {}
+Lispy::Value* Lispy::BoolC::interp() {
+   this->v = new BoolV(b);
+   return this->v;
 }
 
 Lispy::AddC::AddC(ExprC* l, ExprC* r): left(l), right(r) {}

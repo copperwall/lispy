@@ -18,9 +18,16 @@ namespace Lispy {
          ~NumC();
          NumC(int num);
          Value* interp();
-         int val();
       private:
          int n;
+   };
+
+   class BoolC : public ExprC {
+      public:
+         BoolC(bool boolean);
+         Value* interp();
+      private:
+         bool b;
    };
 
    class AddC : public ExprC {

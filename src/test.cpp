@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cassert>
 #include "Value.h"
 #include "ExprC.h"
 
@@ -49,18 +50,23 @@ bool testNestedAdd() {
    return expected == n->val();
 }
 
-/**
- * Tests that we don't lost memory when the arguments to AddC are pointers to
- * heap data, not stack variables.
- */
-bool testDynamicallyAllocatedAdd() {
-   AddC add(new NumC(5), new NumC(10));
-   return true;
+bool testBool() {
+   bool expected = true;
+   BoolC b(true);
+
+   Value* result = b.interp();
+   BoolV *n = dynamic_cast<BoolV*>(result);
+   if (!n) {
+      std::cerr << "Things are bad" << std::endl;
+      return false;
+   }
+
+   return expected == n->val();
 }
 
 int main() {
-   testNum();
-   testAdd();
-   testNestedAdd();
-   testDynamicallyAllocatedAdd();
+   assert(testNum());
+   assert(testAdd());
+   assert(testNestedAdd());
+   assert(testBool());
 }

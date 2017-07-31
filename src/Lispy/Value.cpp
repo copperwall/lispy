@@ -13,3 +13,12 @@ std::string Lispy::NumV::serialize() {
 int Lispy::NumV::val() {
    return this->n;
 }
+
+Lispy::BoolV::BoolV(bool boolean): b(boolean) {}
+bool Lispy::BoolV::val() {
+   return this->b;
+}
+
+std::string Lispy::BoolV::serialize() {
+   return std::to_string(this->b);
+}

@@ -16,4 +16,13 @@ namespace Lispy {
       private:
          int n;
    };
+
+   class BoolV : public Value {
+      public:
+         BoolV(bool boolean);
+         bool val();
+         std::string serialize();
+      private:
+         bool b;
+   };
 }
