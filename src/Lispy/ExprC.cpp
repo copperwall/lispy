@@ -22,7 +22,10 @@ int Lispy::NumC::val() {
 }
 
 Lispy::AddC::AddC(ExprC* l, ExprC* r): left(l), right(r) {}
-Lispy::AddC::~AddC() {}
+Lispy::AddC::~AddC() {
+   delete this->left;
+   delete this->right;
+}
 
 Lispy::Value* Lispy::AddC::interp() {
    Value* l = this->left->interp();
