@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 namespace Lispy {
    class Value {
@@ -14,7 +15,7 @@ namespace Lispy {
          int val();
          std::string serialize();
       private:
-         int n;
+         int _num;
    };
 
    class BoolV : public Value {
@@ -23,6 +24,6 @@ namespace Lispy {
          bool val();
          std::string serialize();
       private:
-         bool b;
+         bool _boolean;
    };
 }

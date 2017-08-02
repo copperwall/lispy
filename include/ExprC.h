@@ -10,7 +10,7 @@ namespace Lispy {
          virtual Value* interp() = 0;
       protected:
          // Handle for a dynamically allocated Value subclass.
-         Value* v;
+         Value* _value;
    };
 
    class NumC : public ExprC {
@@ -19,7 +19,7 @@ namespace Lispy {
          NumC(int num);
          Value* interp();
       private:
-         int n;
+         int _num;
    };
 
    class BoolC : public ExprC {
@@ -27,16 +27,16 @@ namespace Lispy {
          BoolC(bool boolean);
          Value* interp();
       private:
-         bool b;
+         bool _boolean;
    };
 
    class AddC : public ExprC {
       public:
          ~AddC();
-         AddC(ExprC* l, ExprC* r);
+         AddC(ExprC* left, ExprC* right);
          Value* interp();
       private:
-         ExprC* left;
-         ExprC* right;
+         ExprC* _left;
+         ExprC* _right;
    };
 }

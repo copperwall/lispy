@@ -3,34 +3,34 @@
 #include "Value.h"
 #include "ExprC.h"
 
-Lispy::ExprC::ExprC(): v(nullptr) {}
+Lispy::ExprC::ExprC(): _value(nullptr) {}
 Lispy::ExprC::~ExprC() {
-   delete this->v;
+   delete this->_value;
 }
 
 Lispy::NumC::~NumC() {}
-Lispy::NumC::NumC(int num): n(num) {}
+Lispy::NumC::NumC(int num): _num(num) {}
 
 Lispy::Value* Lispy::NumC::interp() {
-   this->v = new NumV(n);
-   return this->v;
+   this->_value = new NumV(this->_num);
+   return this->_value;
 }
 
-Lispy::BoolC::BoolC(bool boolean): b(boolean) {}
+Lispy::BoolC::BoolC(bool boolean): _boolean(boolean) {}
 Lispy::Value* Lispy::BoolC::interp() {
-   this->v = new BoolV(b);
-   return this->v;
+   this->_value = new BoolV(this->_boolean);
+   return this->_value;
 }
 
-Lispy::AddC::AddC(ExprC* l, ExprC* r): left(l), right(r) {}
+Lispy::AddC::AddC(ExprC* left, ExprC* right): _left(left), _right(right) {}
 Lispy::AddC::~AddC() {
-   delete this->left;
-   delete this->right;
+   delete this->_left;
+   delete this->_right;
 }
 
 Lispy::Value* Lispy::AddC::interp() {
-   Value* l = this->left->interp();
-   Value* r = this->right->interp();
+   Value* l = this->_left->interp();
+   Value* r = this->_right->interp();
 
    NumV *lv = dynamic_cast<NumV*>(l);
    if (!lv) {
@@ -42,6 +42,6 @@ Lispy::Value* Lispy::AddC::interp() {
       throw std::exception();
    }
 
-   this->v = new Lispy::NumV(lv->val() + rv->val());
-   return this->v;
+   this->_value = new Lispy::NumV(lv->val() + rv->val());
+   return this->_value;
 }
