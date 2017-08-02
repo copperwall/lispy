@@ -45,3 +45,19 @@ Lispy::Value* Lispy::AddC::interp(Env env) {
    this->_value = new Lispy::NumV(lv->val() + rv->val());
    return this->_value;
 }
+
+Lispy::IdC::IdC(std::string sym): _sym(sym) {}
+Lispy::Value* Lispy::IdC::interp(Env env) {
+   // TODO: Add better error message.
+   return env.at(this->_sym);
+}
+
+Lispy::LamC::~LamC() {
+   delete this->_body;
+}
+Lispy::LamC::LamC(std::vector<std::string> params, ExprC* body): _params(params), _body(body) {}
+
+Lispy::Value* Lispy::LamC::interp(Env env) {
+   this->_value = new ClosV(this->_params, this->_body, env);
+   return this->_value;
+}

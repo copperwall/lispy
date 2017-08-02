@@ -22,3 +22,16 @@ bool Lispy::BoolV::val() {
 std::string Lispy::BoolV::serialize() {
    return std::to_string(this->_boolean);
 }
+
+Lispy::ClosV::~ClosV() {
+   // This is kind of bad, if we just pass the pointer from LamC to ClosV, then
+   // we'll double delete it or something when the AST gets destructed.
+   //
+   // Maybe this is a good reason to use shared smart pointers.
+}
+Lispy::ClosV::ClosV(std::vector<std::string> params, ExprC* body, Env env)
+   : _params(params), _body(body), _env(env)  {}
+
+std::string Lispy::ClosV::serialize() {
+   return "<procedure>";
+}

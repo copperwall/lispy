@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include <string>
 #include "Base.h"
 
@@ -29,5 +30,23 @@ namespace Lispy {
       private:
          ExprC* _left;
          ExprC* _right;
+   };
+
+   class IdC : public ExprC {
+      public:
+         IdC(std::string sym);
+         Value* interp(Env env);
+      private:
+         std::string _sym;
+   };
+
+   class LamC : public ExprC {
+      public:
+         ~LamC();
+         LamC(std::vector<std::string> params, ExprC* body);
+         Value* interp(Env env);
+      private:
+         std::vector<std::string> _params;
+         ExprC* _body;
    };
 }

@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 #include <cassert>
 #include "Base.h"
 #include "Value.h"
@@ -70,9 +71,28 @@ bool testBool() {
    return expected == n->val();
 }
 
+bool testLam() {
+   Env e;
+   std::vector<std::string> params;
+   params.push_back("one");
+   params.push_back("two");
+
+   LamC lam(params, new NumC(10));
+   Value* result = lam.interp(e);
+
+   ClosV *c = dynamic_cast<ClosV*>(result);
+   if (!c) {
+      std::cerr << "Things are bad" << std::endl;
+      return false;
+   }
+   c->serialize();
+   return true;
+}
+
 int main() {
    assert(testNum());
    assert(testAdd());
    assert(testNestedAdd());
    assert(testBool());
+   assert(testLam());
 }

@@ -23,4 +23,15 @@ namespace Lispy {
       private:
          bool _boolean;
    };
+
+   class ClosV : public Value {
+      public:
+         ~ClosV();
+         ClosV(std::vector<std::string> params, ExprC* body, Env env);
+         std::string serialize();
+      private:
+         std::vector<std::string> _params;
+         ExprC* _body;
+         Env _env;
+   };
 }
