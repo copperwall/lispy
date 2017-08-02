@@ -11,13 +11,13 @@ Lispy::ExprC::~ExprC() {
 Lispy::NumC::~NumC() {}
 Lispy::NumC::NumC(int num): _num(num) {}
 
-Lispy::Value* Lispy::NumC::interp() {
+Lispy::Value* Lispy::NumC::interp(Env env) {
    this->_value = new NumV(this->_num);
    return this->_value;
 }
 
 Lispy::BoolC::BoolC(bool boolean): _boolean(boolean) {}
-Lispy::Value* Lispy::BoolC::interp() {
+Lispy::Value* Lispy::BoolC::interp(Env env) {
    this->_value = new BoolV(this->_boolean);
    return this->_value;
 }
@@ -28,9 +28,9 @@ Lispy::AddC::~AddC() {
    delete this->_right;
 }
 
-Lispy::Value* Lispy::AddC::interp() {
-   Value* l = this->_left->interp();
-   Value* r = this->_right->interp();
+Lispy::Value* Lispy::AddC::interp(Env env) {
+   Value* l = this->_left->interp(env);
+   Value* r = this->_right->interp(env);
 
    NumV *lv = dynamic_cast<NumV*>(l);
    if (!lv) {

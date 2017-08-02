@@ -1,13 +1,10 @@
 #pragma once
 #include <string>
+#include <vector>
+#include "Base.h"
 
+// All Value subclasses
 namespace Lispy {
-   class Value {
-      public:
-         virtual ~Value();
-         virtual std::string serialize() = 0;
-   };
-
    class NumV : public Value {
       public:
          ~NumV();
