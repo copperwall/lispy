@@ -89,10 +89,83 @@ bool testLam() {
    return true;
 }
 
+// () => 10
+bool testNoParamAppC() {
+   int expected = 10;
+   Env e;
+
+   std::vector<std::string> params;
+   std::vector<ExprC*> args;
+   LamC* l = new LamC(params, new NumC(10));
+   AppC a(l, args);
+
+   Value* result = a.interp(e);
+
+   NumV *n = dynamic_cast<NumV*>(result);
+   if (!n) {
+      std::cerr << "Things are bad" << std::endl;
+      return false;
+   }
+
+   return expected == n->val();
+}
+
+// (a) => a
+bool testOneParamAppC() {
+   int expected = 20;
+   Env e;
+
+   std::vector<std::string> params;
+   params.push_back("a");
+   std::vector<ExprC*> args;
+   args.push_back(new NumC(20));
+   LamC* l = new LamC(params, new IdC("a"));
+   AppC a(l, args);
+
+   Value* result = a.interp(e);
+
+   NumV *n = dynamic_cast<NumV*>(result);
+   if (!n) {
+      std::cerr << "Things are bad" << std::endl;
+      return false;
+   }
+
+   return expected == n->val();
+}
+
+// (a, b) => a + b
+bool testTwoParamAppC() {
+   int expected = 50;
+   Env e;
+
+   std::vector<std::string> params;
+   params.push_back("a");
+   params.push_back("b");
+   std::vector<ExprC*> args;
+
+   args.push_back(new NumC(20));
+   args.push_back(new NumC(30));
+   LamC* l = new LamC(params, new AddC(new IdC("a"), new IdC("b")));
+   AppC a(l, args);
+
+   Value* result = a.interp(e);
+
+   NumV *n = dynamic_cast<NumV*>(result);
+   if (!n) {
+      std::cerr << "Things are bad" << std::endl;
+      return false;
+   }
+
+   return expected == n->val();
+}
+
 int main() {
    assert(testNum());
    assert(testAdd());
    assert(testNestedAdd());
    assert(testBool());
    assert(testLam());
+   assert(testNoParamAppC());
+   assert(testOneParamAppC());
+   assert(testTwoParamAppC());
 }

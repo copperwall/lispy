@@ -61,3 +61,38 @@ Lispy::Value* Lispy::LamC::interp(Env env) {
    this->_value = new ClosV(this->_params, this->_body, env);
    return this->_value;
 }
+
+Lispy::AppC::~AppC() {
+   delete this->_func;
+
+   for (auto i = _args.begin(); i != _args.end(); ++i) {
+      delete *i;
+   }
+}
+Lispy::AppC::AppC(ExprC* func, std::vector<ExprC*> args): _func(func), _args(args) {}
+
+Lispy::Value* Lispy::AppC::interp(Env env) {
+   Value* clos = this->_func->interp(env);
+
+   ClosV* cv = dynamic_cast<ClosV*>(clos);
+   if (!cv) {
+      // Can't apply a non-function value.
+      throw std::exception();
+   }
+
+   const std::vector<std::string>& params = cv->params();
+
+   if (params.size() != this->_args.size()) {
+      // wrong arity
+      throw std::exception();
+   }
+
+   // Copy environment
+   Env newEnv(env);
+
+   for (int i = 0; i < this->_args.size(); i++) {
+      newEnv[params[i]] = (this->_args[i])->interp(env);
+   }
+
+   return cv->body()->interp(newEnv);
+}

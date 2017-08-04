@@ -35,3 +35,12 @@ Lispy::ClosV::ClosV(std::vector<std::string> params, ExprC* body, Env env)
 std::string Lispy::ClosV::serialize() {
    return "<procedure>";
 }
+
+const std::vector<std::string>& Lispy::ClosV::params() {
+   return this->_params;
+}
+
+// TODO: Should probably be a smart pointer.
+const Lispy::ExprC* Lispy::ClosV::body() {
+   return this->_body;
+}

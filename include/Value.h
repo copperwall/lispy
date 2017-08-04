@@ -29,6 +29,8 @@ namespace Lispy {
          ~ClosV();
          ClosV(std::vector<std::string> params, ExprC* body, Env env);
          std::string serialize();
+         const std::vector<std::string>& params();
+         const ExprC* body();
       private:
          std::vector<std::string> _params;
          ExprC* _body;

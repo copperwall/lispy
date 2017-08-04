@@ -49,4 +49,15 @@ namespace Lispy {
          std::vector<std::string> _params;
          ExprC* _body;
    };
+
+   // Fun ExprC, list of ExprC
+   class AppC : public ExprC {
+      public:
+         ~AppC();
+         AppC(ExprC* func, std::vector<ExprC*> args);
+         Value* interp(Env env);
+      private:
+         ExprC* _func;
+         std::vector<ExprC*> _args;
+   };
 }
