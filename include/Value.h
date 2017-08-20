@@ -5,6 +5,11 @@
 
 // All Value subclasses
 namespace Lispy {
+   /**
+    * Number Value
+    *
+    * Represents a number value.
+    */
    class NumV : public Value {
       public:
          ~NumV();
@@ -15,6 +20,12 @@ namespace Lispy {
          int _num;
    };
 
+   /**
+    * Boolean Value
+    *
+    * Represents a boolean value. A BoolV can result from interpreting a BoolC
+    * or an equality expression (TODO).
+    */
    class BoolV : public Value {
       public:
          BoolV(bool boolean);
@@ -24,6 +35,14 @@ namespace Lispy {
          bool _boolean;
    };
 
+   /**
+    * Closure Value
+    *
+    * A ClosV is composed of a list of parameter names, an ExprC body, and an
+    * environment. The environment bound to a closure includes the closure's
+    * parameters, and the environment from when the function expression was
+    * defined. This gives the ClosV lexical scope.
+    */
    class ClosV : public Value {
       public:
          ~ClosV();

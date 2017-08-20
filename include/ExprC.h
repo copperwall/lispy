@@ -5,6 +5,12 @@
 
 // All ExprC subclasses
 namespace Lispy {
+   /**
+    * Number Expression
+    *
+    * A NumC represents a number literal. Interpreting a NumC should always
+    * result in a NumV with the same represented number as the NumC.
+    */
    class NumC : public ExprC {
       public:
          ~NumC();
@@ -14,6 +20,12 @@ namespace Lispy {
          int _num;
    };
 
+   /**
+    * Boolean Expression
+    *
+    * A BoolC represents a boolean literal. Interpreting a BoolC should always
+    * result in a BoolV with the same represented boolean as the BoolC.
+    */
    class BoolC : public ExprC {
       public:
          BoolC(bool boolean);
@@ -22,6 +34,11 @@ namespace Lispy {
          bool _boolean;
    };
 
+   /**
+    * Boolean Expression
+    *
+    * A BoolC represents a boolean literal.
+    */
    class AddC : public ExprC {
       public:
          ~AddC();
@@ -32,6 +49,12 @@ namespace Lispy {
          ExprC* _right;
    };
 
+   /**
+    * Identifier Expression
+    *
+    * An IdC represents a symbol. IdCs are used to lookup variables stored in
+    * an environment.
+    */
    class IdC : public ExprC {
       public:
          IdC(std::string sym);
@@ -40,6 +63,12 @@ namespace Lispy {
          std::string _sym;
    };
 
+   /**
+    * Function Expression
+    *
+    * A LamC represents a function expression or lambda. It is composed of a
+    * list of string parameters and an ExprC body. A LamC has no name.
+    */
    class LamC : public ExprC {
       public:
          ~LamC();
@@ -50,7 +79,22 @@ namespace Lispy {
          ExprC* _body;
    };
 
-   // Fun ExprC, list of ExprC
+   /**
+    * Function Application
+    *
+    * An AppC represents a function application or invocation. It is composed
+    * of an ExprC for the function body/expression and a list of ExprC arguments.
+    *
+    * When interpreted, all ExprCs in args are interpreted into Values. Those
+    * Values are added to the environment and the func ExprC is evaluated with
+    * that new environment.
+    *
+    * Creating an AppC with a func ExprC that does not evaluate into a closure
+    * (ClosV) will cause an error.
+    *
+    * Applying a func ExprC with the wrong number of args will result in an
+    * arity error.
+    */
    class AppC : public ExprC {
       public:
          ~AppC();
