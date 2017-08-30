@@ -204,4 +204,6 @@ int main() {
    assert(testTwoParamAppC());
    assert(testIfCTrue());
    assert(testIfCFalse());
+
+   return 0;
 }
