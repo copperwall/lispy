@@ -159,6 +159,40 @@ bool testTwoParamAppC() {
    return expected == n->val();
 }
 
+bool testIfCTrue() {
+   int expected = 10;
+
+   Env e;
+   IfC i(new BoolC(true), new NumC(10), new NumC(12));
+
+   Value* result = i.interp(e);
+
+   NumV *n = dynamic_cast<NumV*>(result);
+   if (!n) {
+      std::cerr << "Things are bad" << std::endl;
+      return false;
+   }
+
+   return expected == n->val();
+}
+
+bool testIfCFalse() {
+   int expected = 12;
+
+   Env e;
+   IfC i(new BoolC(false), new NumC(10), new NumC(12));
+
+   Value* result = i.interp(e);
+
+   NumV *n = dynamic_cast<NumV*>(result);
+   if (!n) {
+      std::cerr << "Things are bad" << std::endl;
+      return false;
+   }
+
+   return expected == n->val();
+}
+
 int main() {
    assert(testNum());
    assert(testAdd());
@@ -168,4 +202,6 @@ int main() {
    assert(testNoParamAppC());
    assert(testOneParamAppC());
    assert(testTwoParamAppC());
+   assert(testIfCTrue());
+   assert(testIfCFalse());
 }
