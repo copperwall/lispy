@@ -104,4 +104,23 @@ namespace Lispy {
          ExprC* _func;
          std::vector<ExprC*> _args;
    };
+
+   /**
+    * If Expression
+    *
+    * An IfC is composed of three ExprCs, a predicate, a true expression,
+    * and a false expression. The value of the ExprC is the interpreted Value
+    * of the true ExprC if the predicate is true and is the interpreted Value
+    * of the false ExprC if the predicate is false.
+    */
+   class IfC : public ExprC {
+      public:
+         ~IfC();
+         IfC(ExprC* predicate, ExprC* t, ExprC* f);
+         Value* interp(Env env);
+      private:
+         ExprC* _predicate;
+         ExprC* _t;
+         ExprC* _f;
+   };
 }

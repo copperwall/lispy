@@ -96,3 +96,27 @@ Lispy::Value* Lispy::AppC::interp(Env env) {
 
    return cv->body()->interp(newEnv);
 }
+
+Lispy::IfC::~IfC() {
+   delete this->_predicate;
+   delete this->_t;
+   delete this->_f;
+}
+
+Lispy::IfC::IfC(ExprC* predicate, ExprC* t, ExprC* f): _predicate(predicate), _t(t), _f(f) {}
+
+Lispy::Value* Lispy::IfC::interp(Env env) {
+   Value* v = this->_predicate->interp(env);
+   BoolV* b = dynamic_cast<BoolV*>(v);
+
+   if (!b) {
+      // Needs to be boolean value
+      throw std::exception();
+   }
+
+   if (b->val()) {
+      return this->_t->interp(env);
+   } else {
+      return this->_f->interp(env);
+   }
+}
